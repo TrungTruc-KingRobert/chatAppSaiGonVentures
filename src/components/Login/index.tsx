@@ -1,5 +1,6 @@
 // hooks
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // firebase
 import {
@@ -13,6 +14,8 @@ import { signInWithPopup } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   // Xử lý login với google
   const handleGoogleLogin = () => {
     signInWithPopup(auth, googleProvider);
@@ -21,6 +24,7 @@ const Login = () => {
   onAuthStateChanged(auth, (user) => {
     console.log("user:", user);
     if (user) {
+      navigate("/");
     }
   });
 
