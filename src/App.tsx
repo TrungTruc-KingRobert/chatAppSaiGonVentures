@@ -1,9 +1,7 @@
+import Login from "./components/Login";
+
 const App = () => {
-  return (
-    <h1 className="text-3xl font-bold underline">
-      This is Chat App for SGV's Test
-    </h1>
-  );
+  return <Login />;
 };
 
 export default App;

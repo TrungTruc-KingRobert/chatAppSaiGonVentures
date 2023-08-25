@@ -1,7 +1,6 @@
-import firebase from 'firebase/compat/app'
-import 'firebase/compat/analytics'
-import 'firebase/compat/auth'
-import 'firebase/firestore'
+import { initializeApp } from "firebase/app"
+import { getAuth, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
+
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -14,10 +13,8 @@ const firebaseConfig = {
 }
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig)
-firebase.analytics()
+const app = initializeApp(firebaseConfig)
+const auth = getAuth(app)
+const googleProvider = new GoogleAuthProvider()
 
-const auth = firebase.auth()
-const db = firebase.firestore()
-
-export {auth, db}
+export {auth, googleProvider, onAuthStateChanged}
