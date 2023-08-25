@@ -1,8 +1,24 @@
+// react router dom
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+// components
+import Login from "./components/Login";
+import ChatRoom from "./components/ChatRoom";
+
 const App = () => {
   return (
-    <h1 className="text-3xl font-bold underline">
-      This is Chat App for SGV's Test
-    </h1>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={<ChatRoom />}
+        />
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
