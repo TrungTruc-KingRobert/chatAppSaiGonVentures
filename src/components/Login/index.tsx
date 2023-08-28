@@ -1,32 +1,18 @@
 // hooks
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 // firebase
-import {
-  auth,
-  googleProvider,
-  onAuthStateChanged
-} from "../../firebase/config";
+import { auth, googleProvider } from "../../firebase/config";
 import { signInWithPopup } from "firebase/auth";
 
 // icons
 import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
-  const navigate = useNavigate();
-
   // Xử lý login với google
   const handleGoogleLogin = () => {
     signInWithPopup(auth, googleProvider);
   };
-
-  onAuthStateChanged(auth, (user) => {
-    console.log("user:", user);
-    if (user) {
-      navigate("/");
-    }
-  });
 
   return (
     <section className="h-screen">
