@@ -1,7 +1,15 @@
-import React from "react";
+// components
+import HeaderChatWindow from "./HeaderChatWindow";
+import ContentChatWindow from "./ContentChatWindow";
 
 const ChatWindow = () => {
-  return <div>ChatWindow</div>;
+  return (
+    <div className="h-full">
+      <HeaderChatWindow />
+
+      <ContentChatWindow />
+    </div>
+  );
 };
 
 export default ChatWindow;

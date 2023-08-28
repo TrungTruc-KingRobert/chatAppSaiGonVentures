@@ -5,10 +5,10 @@ import RoomList from "./RoomList";
 const Sidebar = () => {
   return (
     <div className="h-screen bg-sky-400 text-white">
-      <div className="w-full p-2">
+      <div className="w-full h-[60px] p-2 border-b-2 border-white">
         <UserInfo />
       </div>
-      <div className="w-full border-t-2 border-white">
+      <div className="w-full ">
         <RoomList />
       </div>
     </div>

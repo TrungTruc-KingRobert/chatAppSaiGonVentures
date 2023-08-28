@@ -7,9 +7,9 @@ const UserInfo = () => {
           alt="This is user avatar"
           className="w-10 h-10 rounded-full"
         />
-        <p className="ml-1">User name</p>
+        <p className="ml-1 truncate">User name</p>
       </div>
-      <button className="border border-white rounded-md mr-2 hover:bg-white hover:text-black">
+      <button className="border border-white rounded-md mr-2 px-1 truncate hover:bg-white hover:text-black">
         Đăng xuất
       </button>
     </div>
