@@ -5,19 +5,24 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import ChatRoom from "./components/ChatRoom";
 
+// auth provider
+import AuthProvider from "./contexts/AuthProvider";
+
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={<ChatRoom />}
-        />
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route
+            path="/"
+            element={<ChatRoom />}
+          />
+          <Route
+            path="/login"
+            element={<Login />}
+          />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 };
