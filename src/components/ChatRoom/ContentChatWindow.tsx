@@ -14,21 +14,21 @@ const ContentChatWindow = () => {
           createdAt={54564512}
         />
         <Message
-          text="Test"
+          text="Hello aksdjf"
+          photoURL=""
+          displayName="Truc"
+          createdAt={54564512}
+        />
+        <Message
+          text="kjkjasdfkjijjiasdf sdfasdfasdf"
           photoURL=""
           displayName="Tung"
           createdAt={54564512}
         />
         <Message
-          text="Test"
+          text="jqopwpjgksadvxcvnmvvsda"
           photoURL=""
-          displayName="Tung"
-          createdAt={54564512}
-        />
-        <Message
-          text="Test"
-          photoURL=""
-          displayName="Tung"
+          displayName="Truc"
           createdAt={54564512}
         />
       </div>
