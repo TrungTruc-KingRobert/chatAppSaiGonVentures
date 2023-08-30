@@ -69,9 +69,9 @@ const InviteMemberModal = () => {
     setListUserInvite(newList);
   };
 
-  const usersForThisInvite = users.filter(
-    (u: userInterface) => !selectedRoom.members.includes(u.uid)
-  );
+  const usersForThisInvite = users
+    ? users.filter((u: userInterface) => !selectedRoom.members.includes(u.uid))
+    : [];
 
   return (
     <dialog
