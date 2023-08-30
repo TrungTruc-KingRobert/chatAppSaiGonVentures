@@ -1,5 +1,5 @@
 // hooks
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 // firebase
 import { db } from "../firebase/config";
@@ -14,10 +14,14 @@ import {
 // interface
 import { conditionInterface } from "../interfaces/ConditionInterface";
 
+// context
+import { AuthContext } from "../contexts/AuthProvider";
+
 const useFirestore = (
   collectionName: string,
   condition?: conditionInterface
 ) => {
+  const user = useContext(AuthContext);
   const [documents, setDocuments] = useState([]);
 
   useEffect(() => {
@@ -50,7 +54,7 @@ const useFirestore = (
     return () => {
       unsubscribe(); // Hủy lắng nghe khi component unmount
     };
-  }, [collectionName, condition]);
+  }, [collectionName, condition, user.uid]);
 
   return documents;
 };

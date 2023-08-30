@@ -102,7 +102,7 @@ const ContentChatWindow = () => {
       {/* Nhập nội dung tin nhắn */}
       <form
         onSubmit={handleSubmit(handleOnSubmit)}
-        className="flex justify-between items-center p-1 mb-4 border-[1px] rounded-[4px]"
+        className="flex justify-between items-center p-1 mb-6 border-[1px] rounded-[4px]"
       >
         <input
           {...register("message", { required: true })}
