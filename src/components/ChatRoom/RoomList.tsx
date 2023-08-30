@@ -2,7 +2,12 @@
 import { useState, useContext } from "react";
 
 // icons
-import { FaAngleRight, FaAngleDown, FaRegPlusSquare } from "react-icons/fa";
+import {
+  FaAngleRight,
+  FaAngleDown,
+  FaRegPlusSquare,
+  FaRegHandPointRight
+} from "react-icons/fa";
 
 // context
 import { AppContext } from "../../contexts/AppProvider";
@@ -39,9 +44,18 @@ const RoomList = () => {
           dataRooms.rooms.map((room: any) => (
             <div
               key={room.id}
-              className="pb-3 cursor-pointer hover:font-bold hover:transition-transform hover:duration-300 hover:ease-in-out transform hover:translate-x-1"
-              onClick={() => dataRooms.setSelectedRoom(room)}
+              className={`pb-3 cursor-pointer ${
+                dataRooms.selectedRoomId === room.id
+                  ? "flex items-center font-bold"
+                  : "hover:font-bold hover:transition-transform hover:duration-300 hover:ease-in-out transform hover:translate-x-1"
+              }`}
+              onClick={() => dataRooms.setSelectedRoomId(room.id)}
             >
+              {dataRooms.selectedRoomId === room.id ? (
+                <FaRegHandPointRight className="mr-1" />
+              ) : (
+                <></>
+              )}{" "}
               {room.name}
             </div>
           ))

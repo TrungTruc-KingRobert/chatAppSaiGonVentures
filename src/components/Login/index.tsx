@@ -18,7 +18,7 @@ const Login = () => {
       const check = await checkUserExists(dataUser.user.uid);
 
       if (check === false) {
-        const res = addUser({
+        addUser({
           uid: dataUser.user.uid,
           email: dataUser.user.email!,
           displayName: dataUser.user.displayName!,

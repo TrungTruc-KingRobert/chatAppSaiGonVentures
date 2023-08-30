@@ -16,7 +16,7 @@ import { conditionInterface } from "../interfaces/ConditionInterface";
 
 const useFirestore = (
   collectionName: string,
-  condition: conditionInterface
+  condition?: conditionInterface
 ) => {
   const [documents, setDocuments] = useState([]);
 

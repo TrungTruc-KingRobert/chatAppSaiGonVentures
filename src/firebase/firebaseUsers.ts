@@ -22,7 +22,6 @@ const addUser = (user: userInterface) => {
   } catch (error) {
     return {success: false, message: "Can not add new user to friestore!"}
   }
-  
 }
 
 export {checkUserExists, addUser}

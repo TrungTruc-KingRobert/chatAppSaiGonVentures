@@ -12,37 +12,41 @@ import { AuthContext } from "./AuthProvider";
 
 interface RoomContextType {
   rooms: roomInterface[];
+  users: userInterface[];
   members: userInterface[];
+  selectedRoom: roomInterface;
   isAddRoomVisible: boolean;
   setIsAddRoomVisible: (value: boolean) => void;
-  selectedRoom: roomInterface;
-  setSelectedRoom: (value: roomInterface) => void;
+  isInviteMemberVisible: boolean;
+  setIsInviteMemberVisible: (value: boolean) => void;
+  selectedRoomId: string;
+  setSelectedRoomId: (value: string) => void;
 }
 
 export const AppContext = createContext<RoomContextType>({
   rooms: [],
+  users: [],
   members: [],
-  isAddRoomVisible: false,
-  setIsAddRoomVisible: (value: boolean) => {},
   selectedRoom: {
     id: "",
     name: "",
     description: "",
-    members: [""]
+    members: []
   },
-  setSelectedRoom: (value: roomInterface) => {}
+  isAddRoomVisible: false,
+  setIsAddRoomVisible: (value: boolean) => {},
+  isInviteMemberVisible: false,
+  setIsInviteMemberVisible: (value: boolean) => {},
+  selectedRoomId: "",
+  setSelectedRoomId: (value: string) => {}
 });
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
   const user = useContext(AuthContext);
 
   const [isAddRoomVisible, setIsAddRoomVisible] = useState(false);
-  const [selectedRoom, setSelectedRoom] = useState<roomInterface>({
-    id: "",
-    name: "",
-    description: "",
-    members: [""]
-  });
+  const [isInviteMemberVisible, setIsInviteMemberVisible] = useState(false);
+  const [selectedRoomId, setSelectedRoomId] = useState("");
 
   const roomsCondition: conditionInterface = useMemo(() => {
     return {
@@ -54,6 +58,11 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const rooms = useFirestore("rooms", roomsCondition);
 
+  const selectedRoom = useMemo(
+    () => rooms.find((room: roomInterface) => room.id === selectedRoomId) || {},
+    [rooms, selectedRoomId]
+  );
+
   const usersCondition = useMemo(() => {
     return {
       fieldName: "uid",
@@ -64,15 +73,23 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const members = useFirestore("users", usersCondition);
 
+  const users = useFirestore("users").filter(
+    (u: userInterface) => u.uid !== user.uid
+  );
+
   return (
     <AppContext.Provider
       value={{
         rooms,
+        users,
         members,
+        selectedRoom,
         isAddRoomVisible,
         setIsAddRoomVisible,
-        selectedRoom,
-        setSelectedRoom
+        isInviteMemberVisible,
+        setIsInviteMemberVisible,
+        selectedRoomId,
+        setSelectedRoomId
       }}
     >
       {children}

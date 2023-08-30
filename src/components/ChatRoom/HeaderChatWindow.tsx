@@ -8,14 +8,18 @@ import { Tooltip } from "react-tooltip";
 import { FaUserPlus } from "react-icons/fa";
 
 // interface
-import { roomInterface } from "../../interfaces/RoomInterface";
 import { userInterface } from "../../interfaces/UserInterface";
 
 // context
 import { AppContext } from "../../contexts/AppProvider";
 
 const HeaderChatWindow = () => {
-  const { selectedRoom, members } = useContext(AppContext);
+  const { selectedRoom, members, setIsInviteMemberVisible } =
+    useContext(AppContext);
+
+  const handleInviteMember = () => {
+    setIsInviteMemberVisible(true);
+  };
 
   return (
     <div className="w-full h-[60px] p-2 border-b-2 border-sky-400">
@@ -27,101 +31,148 @@ const HeaderChatWindow = () => {
           </span>
         </div>
         <div className="flex h-10">
-          <button className="flex items-center mr-2 hover:font-bold">
+          <button
+            className="flex items-center mr-2 hover:font-bold"
+            onClick={handleInviteMember}
+          >
             <FaUserPlus className="mr-1" /> Mời
           </button>
           <div className="avatar-group -space-x-4">
             {members ? (
-              members.map((member: userInterface, index: number) => (
-                <div key={member.uid}>
+              members.length <= 2 ? (
+                members.map((member: userInterface, index: number) => (
+                  <div key={member.uid}>
+                    <div
+                      id={member.uid}
+                      className={`avatar cursor-pointer ${
+                        member.photoURL ? "" : "placeholder"
+                      }`}
+                    >
+                      <div
+                        className={`w-8 ${
+                          member.photoURL
+                            ? ""
+                            : "bg-neutral-focus text-neutral-content"
+                        }`}
+                      >
+                        {member.photoURL ? (
+                          <img src={member.photoURL} />
+                        ) : (
+                          <span>
+                            {member.displayName.charAt(0).toUpperCase()}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <Tooltip anchorSelect={`#${member.uid}`}>
+                      <button>{member.displayName}</button>
+                    </Tooltip>
+                  </div>
+                ))
+              ) : (
+                <>
                   <div
-                    id={member.uid}
+                    id={members[0].uid}
                     className={`avatar cursor-pointer ${
-                      member.photoURL ? "" : "placeholder"
+                      members[0].photoURL ? "" : "placeholder"
                     }`}
                   >
                     <div
                       className={`w-8 ${
-                        member.photoURL
+                        members[0].photoURL
                           ? ""
                           : "bg-neutral-focus text-neutral-content"
                       }`}
                     >
-                      {member.photoURL ? (
-                        <img src={member.photoURL} />
+                      {members[0].photoURL ? (
+                        <img src={members[0].photoURL} />
                       ) : (
                         <span>
-                          {member.displayName.charAt(0).toUpperCase()}
+                          {members[0].displayName.charAt(0).toUpperCase()}
                         </span>
                       )}
                     </div>
                   </div>
-                  <Tooltip anchorSelect={`#${member.uid}`}>
-                    <button>{member.displayName}</button>
+                  <Tooltip anchorSelect={`#${members[0].uid}`}>
+                    <button>{members[0].displayName}</button>
                   </Tooltip>
-                </div>
-              ))
+                  <div
+                    id={members[1].uid}
+                    className={`avatar cursor-pointer ${
+                      members[1].photoURL ? "" : "placeholder"
+                    }`}
+                  >
+                    <div
+                      className={`w-8 ${
+                        members[1].photoURL
+                          ? ""
+                          : "bg-neutral-focus text-neutral-content"
+                      }`}
+                    >
+                      {members[1].photoURL ? (
+                        <img src={members[1].photoURL} />
+                      ) : (
+                        <span>
+                          {members[1].displayName.charAt(0).toUpperCase()}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <Tooltip anchorSelect={`#${members[1].uid}`}>
+                    <button>{members[1].displayName}</button>
+                  </Tooltip>
+                  <div
+                    id="id_user_hidden"
+                    className="avatar placeholder cursor-pointer"
+                  >
+                    <div className="w-8 bg-neutral-focus text-neutral-content">
+                      <span>+{members.length - 2}</span>
+                    </div>
+                  </div>
+                  <Tooltip
+                    anchorSelect="#id_user_hidden"
+                    className="bg-slate-300 border-2 border-gray-500"
+                    openOnClick
+                  >
+                    {members.map((member: userInterface, index: number) =>
+                      index >= 2 ? (
+                        <div key={member.uid}>
+                          <div
+                            id={member.uid}
+                            className={`avatar cursor-pointer ${
+                              member.photoURL ? "" : "placeholder"
+                            }`}
+                          >
+                            <div
+                              className={`w-8 ${
+                                member.photoURL
+                                  ? ""
+                                  : "bg-neutral-focus text-neutral-content"
+                              }`}
+                            >
+                              {member.photoURL ? (
+                                <img src={member.photoURL} />
+                              ) : (
+                                <span>
+                                  {member.displayName.charAt(0).toUpperCase()}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <Tooltip anchorSelect={`#${member.uid}`}>
+                            <button>{member.displayName}</button>
+                          </Tooltip>
+                        </div>
+                      ) : (
+                        <></>
+                      )
+                    )}
+                  </Tooltip>
+                </>
+              )
             ) : (
               <></>
             )}
-            {/* <div
-              id="id_user_1"
-              className="avatar cursor-pointer"
-            >
-              <div className="w-8">
-                <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1" />
-              </div>
-            </div>
-            <Tooltip anchorSelect="#id_user_1">
-              <button>User name 1</button>
-            </Tooltip>
-            <div
-              id="id_user_2"
-              className="avatar cursor-pointer"
-            >
-              <div className="w-8">
-                <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1" />
-              </div>
-            </div>
-            <Tooltip anchorSelect="#id_user_2">
-              <button>User name 2</button>
-            </Tooltip>
-            <div
-              id="id_user_hidden"
-              className="avatar placeholder cursor-pointer"
-            >
-              <div className="w-8 bg-neutral-focus text-neutral-content">
-                <span>+99</span>
-              </div>
-            </div>
-            <Tooltip
-              anchorSelect="#id_user_hidden"
-              className="bg-slate-300 border-2 border-gray-500"
-              openOnClick
-            >
-              <div
-                id="id_user_3"
-                className="avatar"
-              >
-                <div className="w-8">
-                  <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1" />
-                </div>
-              </div>
-              <Tooltip anchorSelect="#id_user_3">
-                <button>User name 3</button>
-              </Tooltip>
-              <div
-                id="id_user_4"
-                className="avatar"
-              >
-                <div className="w-8">
-                  <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1" />
-                </div>
-              </div>
-              <Tooltip anchorSelect="#id_user_4">
-                <button>User name 3</button>
-              </Tooltip>
-            </Tooltip> */}
           </div>
         </div>
       </div>

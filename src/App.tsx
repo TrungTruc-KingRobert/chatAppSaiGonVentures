@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import ChatRoom from "./components/ChatRoom";
 import AddRoomModal from "./components/Modal/AddRoomModal";
+import InviteMemberModal from "./components/Modal/InviteMemberModal";
 
 // providers
 import AuthProvider from "./contexts/AuthProvider";
@@ -26,6 +27,7 @@ const App = () => {
             />
           </Routes>
           <AddRoomModal />
+          <InviteMemberModal />
         </AppProvider>
       </AuthProvider>
     </BrowserRouter>

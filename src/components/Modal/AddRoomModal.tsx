@@ -51,7 +51,6 @@ const AddRoomModal = () => {
   };
 
   const handleOk = (data: FormData) => {
-    console.log("đã chạy vào đây dù click cancel");
     const res = addRoom({
       name: data.roomName,
       description: data.roomDescription,
