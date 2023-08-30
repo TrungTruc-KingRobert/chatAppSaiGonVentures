@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app"
-import { getAuth, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, connectAuthEmulator } from "firebase/auth";
+import { getFirestore, connectFirestoreEmulator  } from 'firebase/firestore';
 
 
 const firebaseConfig = {
@@ -15,6 +16,13 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
+const db = getFirestore(app)
 const googleProvider = new GoogleAuthProvider()
 
-export {auth, googleProvider, onAuthStateChanged}
+// Kết nối với Auth và Firestore Emulator
+if (window.location.hostname === 'localhost') {
+  connectAuthEmulator(auth, 'http://localhost:9099');
+  connectFirestoreEmulator(db, 'localhost', 8080);
+}
+
+export {auth, db, googleProvider, onAuthStateChanged}

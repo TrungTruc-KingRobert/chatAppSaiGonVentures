@@ -5,7 +5,7 @@ import { ReactNode, createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // firebase
-import { auth, onAuthStateChanged } from "../firebase/config";
+import { auth, db, onAuthStateChanged } from "../firebase/config";
 
 // loading
 import LoadingPage from "../components/Loading/LoadingPage";
@@ -31,7 +31,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // Lắng nghe sự thay đổi của auth state để điều hướng
   useEffect(() => {
-    setIsLoading(true);
     const unSubscribe = onAuthStateChanged(auth, (userGoogle) => {
       if (userGoogle) {
         const newUser: userInterface = {
@@ -43,10 +42,11 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(newUser);
         setIsLoading(false);
         navigate("/");
-      } else {
-        setIsLoading(false);
-        navigate("/login");
+        return;
       }
+
+      setIsLoading(false);
+      navigate("/login");
     });
 
     return () => {

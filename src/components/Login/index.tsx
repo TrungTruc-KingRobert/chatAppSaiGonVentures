@@ -4,14 +4,29 @@ import { useEffect, useState } from "react";
 // firebase
 import { auth, googleProvider } from "../../firebase/config";
 import { signInWithPopup } from "firebase/auth";
+import { checkUserExists, addUser } from "../../firebase/firebaseUsers";
 
 // icons
 import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
   // Xử lý login với google
-  const handleGoogleLogin = () => {
-    signInWithPopup(auth, googleProvider);
+  const handleGoogleLogin = async () => {
+    const dataUser = await signInWithPopup(auth, googleProvider);
+
+    if (dataUser) {
+      const check = await checkUserExists(dataUser.user.uid);
+
+      if (check === false) {
+        addUser({
+          uid: dataUser.user.uid,
+          email: dataUser.user.email!,
+          displayName: dataUser.user.displayName!,
+          photoURL: dataUser.user.photoURL!,
+          providerId: dataUser.providerId!
+        });
+      }
+    }
   };
 
   return (
