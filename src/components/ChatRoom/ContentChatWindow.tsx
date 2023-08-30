@@ -1,6 +1,8 @@
-import React from "react";
-import { Tooltip } from "react-tooltip";
+// components
 import Message from "./Message";
+
+// interface
+import { roomInterface } from "../../interfaces/RoomInterface";
 
 const ContentChatWindow = () => {
   return (

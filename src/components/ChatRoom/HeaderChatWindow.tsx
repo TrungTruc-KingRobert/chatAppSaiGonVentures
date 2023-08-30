@@ -1,23 +1,70 @@
+// hooks
+import { useContext } from "react";
+
 // react-tooltip
 import { Tooltip } from "react-tooltip";
 
 // icons
 import { FaUserPlus } from "react-icons/fa";
 
+// interface
+import { roomInterface } from "../../interfaces/RoomInterface";
+import { userInterface } from "../../interfaces/UserInterface";
+
+// context
+import { AppContext } from "../../contexts/AppProvider";
+
 const HeaderChatWindow = () => {
+  const { selectedRoom, members } = useContext(AppContext);
+
   return (
     <div className="w-full h-[60px] p-2 border-b-2 border-sky-400">
       <div className="flex justify-between items-cente px-4">
         <div>
-          <p>Room 1</p>
-          <span className="text-xs">Đây là Room 1</span>
+          <p>{selectedRoom ? selectedRoom.name : "Tên phòng"}</p>
+          <span className="text-xs">
+            {selectedRoom ? selectedRoom.description : "Mô tả phòng"}
+          </span>
         </div>
         <div className="flex h-10">
           <button className="flex items-center mr-2 hover:font-bold">
             <FaUserPlus className="mr-1" /> Mời
           </button>
           <div className="avatar-group -space-x-4">
-            <div
+            {members ? (
+              members.map((member: userInterface, index: number) => (
+                <div key={member.uid}>
+                  <div
+                    id={member.uid}
+                    className={`avatar cursor-pointer ${
+                      member.photoURL ? "" : "placeholder"
+                    }`}
+                  >
+                    <div
+                      className={`w-8 ${
+                        member.photoURL
+                          ? ""
+                          : "bg-neutral-focus text-neutral-content"
+                      }`}
+                    >
+                      {member.photoURL ? (
+                        <img src={member.photoURL} />
+                      ) : (
+                        <span>
+                          {member.displayName.charAt(0).toUpperCase()}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <Tooltip anchorSelect={`#${member.uid}`}>
+                    <button>{member.displayName}</button>
+                  </Tooltip>
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
+            {/* <div
               id="id_user_1"
               className="avatar cursor-pointer"
             >
@@ -74,7 +121,7 @@ const HeaderChatWindow = () => {
               <Tooltip anchorSelect="#id_user_4">
                 <button>User name 3</button>
               </Tooltip>
-            </Tooltip>
+            </Tooltip> */}
           </div>
         </div>
       </div>

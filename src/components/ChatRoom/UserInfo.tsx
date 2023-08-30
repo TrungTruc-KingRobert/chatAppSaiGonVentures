@@ -9,19 +9,6 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const UserInfo = () => {
-  // useEffect(() => {
-  //   const usersCollection = collection(db, "users");
-
-  //   const unsubscribe = onSnapshot(usersCollection, (snapshot) => {
-  //     const data = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-  //     console.log("data", data);
-  //   });
-
-  //   return () => {
-  //     unsubscribe(); // Hủy lắng nghe khi component unmount
-  //   };
-  // },[]);
-
   const userInfo = useContext(AuthContext);
 
   return (
@@ -34,8 +21,8 @@ const UserInfo = () => {
             className="w-10 h-10 rounded-full"
           />
         ) : (
-          <div className="avatar placeholder cursor-pointer">
-            <div className="w-8 bg-slate-300 text-neutral-content">
+          <div className="avatar placeholder">
+            <div className="w-8 bg-slate-400 text-white rounded-[50%]">
               <span>{userInfo.displayName.charAt(0).toUpperCase()}</span>
             </div>
           </div>

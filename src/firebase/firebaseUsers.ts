@@ -1,4 +1,4 @@
-import { doc, getDoc, addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp, getDocs, where, query } from 'firebase/firestore';
 import {db} from "./config"
 
 // interface
@@ -6,11 +6,11 @@ import { userInterface } from '../interfaces/UserInterface';
 
 // Kiểm tra xem user có trong db chưa
 const checkUserExists = async (userId: string) => {
-  const documentRef = doc(db, "users", userId);
-  const documentSnapshot = await getDoc(documentRef);
-  
-  return documentSnapshot.exists();
-}
+  const q = query(collection(db, "users"), where("uid", "==", userId));
+  const querySnapshot = await getDocs(q);
+
+  return !querySnapshot.empty;
+};
 
 // Thêm user mới
 const addUser = (user: userInterface) => {

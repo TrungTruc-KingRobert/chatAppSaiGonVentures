@@ -25,10 +25,6 @@ const Login = () => {
           photoURL: dataUser.user.photoURL!,
           providerId: dataUser.providerId!
         });
-
-        if (res.success) {
-          console.log("res.message:", res.message);
-        }
       }
     }
   };
